@@ -4,7 +4,7 @@
 #ifndef JULIANZANE_H
 #define JULIANZANE_H
 
-
+void OpenPort();
 
 
 #endif // JULIANZANE_H
