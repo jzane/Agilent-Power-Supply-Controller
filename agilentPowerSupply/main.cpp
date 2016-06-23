@@ -1,5 +1,7 @@
 #include "controllerwindow.h"
 #include <QApplication>
+#include <visa.h>
+#include <julianzane.h>
 
 int main(int argc, char *argv[])
 {

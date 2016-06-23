@@ -13,11 +13,13 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        controllerwindow.cpp
+        controllerwindow.cpp \
+    julianzane.cpp
 
 HEADERS  += controllerwindow.h \
     visa.h \
-    visatype.h
+    visatype.h \
+    julianzane.h
 
 FORMS    += controllerwindow.ui
 

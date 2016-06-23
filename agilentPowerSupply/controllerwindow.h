@@ -1,5 +1,6 @@
 #ifndef CONTROLLERWINDOW_H
 #define CONTROLLERWINDOW_H
+#include <visa.h>
 
 #include <QMainWindow>
 
