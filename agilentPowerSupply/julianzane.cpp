@@ -33,4 +33,30 @@ ErrorStatus = viOpen(defaultRM,VISA_address,0,0,&power_supply);
 CheckError("Unable to open port");
 if(!bGPIB)
 SendSCPI("System:Remote");
+}//end openport()
+
+
+
+
+void ClosePort()
+{
+/* Close the communication port */
+viClose(power_supply);
+viClose(defaultRM);
+}
+
+
+void CheckError(char* pMessage)
+{
+if (ErrorStatus < VI_SUCCESS){
+printf("\n %s",pMessage);
+ClosePort();
+exit(0);
+}
+}
+void delay(clock_t wait)
+{
+clock_t goal;
+goal = wait + clock();
+while( goal > clock() ) ;
 }

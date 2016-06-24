@@ -9,7 +9,7 @@
 #include <julianzane.h>
 
 
-
+//VISession objs created successfully
 ViSession defaultRM; /* Resource manager id */
 ViSession power_supply; /* Identifies power supply */
 int bGPIB = 1; /* Set the number to 0 for use with the RS-232
@@ -17,9 +17,10 @@ int bGPIB = 1; /* Set the number to 0 for use with the RS-232
 long ErrorStatus; /* VISA Error code */
 char commandString[256];
 char ReadBuffer[256];
-void delay(clock_t wait);
-void SendSCPI(char* pString);
-void CheckError(char* pMessage);
+//func prototypes in julian.h
+//void delay(clock_t wait);
+//void SendSCPI(char* pString);
+//void CheckError(char* pMessage);
 
 
 
