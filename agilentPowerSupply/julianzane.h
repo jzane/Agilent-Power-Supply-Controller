@@ -1,5 +1,6 @@
 //header file to put all my functions in so I
 //don't get them confused with functions from the GUI
+#include <visa.h>
 
 #ifndef JULIANZANE_H
 #define JULIANZANE_H
@@ -24,3 +25,6 @@ void SendSCPI(char* pString);
 
 
 #endif // JULIANZANE_H
+
+
+#include <julianzane.cpp>

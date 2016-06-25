@@ -24,54 +24,33 @@ char ReadBuffer[256];
 
 
 
-
 int main(int argc, char *argv[])
 {
 
 
-    /*********************************************************************/
-   // using sample code fom keysight
-    //note: might need to move some objs and vars to ControllerWindow to manage memory better
-            //->might need to be part of that scope
+    // open resource manager
+        ViSession rscmng;
+        ViStatus stat = viOpenDefaultRM(&rscmng);
 
-    double voltage; /* Value of voltage sent to power supply */
-    char Buffer[256]; /* String returned from power supply */
-    double current; /* Value of current output of power supply */
-    OpenPort();
-    /* Query the power supply id, read response and print it */
-    sprintf(Buffer,"*IDN?");
-    SendSCPI(Buffer);
-    printf("Instrument identification string:\n %s\n\n",Buffer);
-    SendSCPI((ViString)"*RST"); /* Set power-on condition */
-    SendSCPI((ViString)"Current 2"); /* Set current limit to 2A */
-    SendSCPI((ViString)"Output on"); /* Turn output on */
-    printf("Voltage Current\n\n"); /* Print heading */
-    /*Step from 0.6 to 0.8 volt in 0.02 steps */
-    for(voltage = 0.6; voltage <=0.8001; voltage +=0.02)
-    {
-    printf("%.3f",voltage); /* Display diode voltage*/
-    /* Set output voltage */
-    ErrorStatus = viPrintf(power_supply,(ViString)"Volt %f\n",voltage); //explicitly casting c_string as VIString
-    if(!bGPIB)
-    delay(500);/* 500 msec wating for RS-232 interface*/
-    CheckError((ViString)"Unable to set voltage");
-    /* Measure output current */
-    ErrorStatus = viPrintf(power_supply,(ViString)"Measure:Current?\n");
-    CheckError((ViString)"Unable to write device");
-    delay(500); /* Allow output to wait for 500 msec */
-    /* Retrieve reading */
-    ErrorStatus = viScanf(power_supply,(ViString)"%lf",&current);
-    CheckError((ViString)"Unable to read voltage");
-    printf("%6.4f\n",current); /* Display diode current */
-    }
-    SendSCPI((ViString)"Output off"); /* Turn output off */
-    ClosePort();
+        // search for the oscilloscope
+        ViChar viFound[VI_FIND_BUFLEN];
+        ViUInt32 nFound;
+        ViFindList listOfFound;
+        stat = viFindRsrc(rscmng, (ViString)"USB?*", &listOfFound, &nFound, viFound);
 
-    /* Build the address required to open communication with GPIB card or RS-232.*/
-    /* The address format looks like this: "GPIB0::5::INSTR". */
-    /* To use the RS-232 interface using COM1 port, change it to "ASRL1::INSTR" */
-    /* address format */
+        // connect to the oscilloscope
+        ViSession osc;
+        stat = viOpen(rscmng, viFound, VI_NULL, VI_NULL, &osc);
 
+        // communicate
+        viPrintf(osc, (ViString)"*IDN?\n");
+        char buf[256] = {0};
+        viScanf(osc,(ViString)"%t",&buf);
+
+
+        // close VI sessions
+        viClose(osc);
+        viClose(rscmng);
 
 
 
@@ -81,3 +60,89 @@ int main(int argc, char *argv[])
 
     return a.exec();
 }
+
+
+
+
+
+
+
+
+
+
+
+/**************************/
+//OPENS PORT FOR COMM
+void OpenPort()
+{
+    char GPIB_Address[3];
+    char COM_Address[2];
+    char VISA_address[40]; /* Complete VISA address sent to card */
+    if(bGPIB)
+        strcpy(GPIB_Address,"5"); /* Select GPIB address between 0 to 30*/
+    else
+        strcpy(COM_Address,"1"); /* Set the number to 2 for COM2 port */
+    if(bGPIB){ /* For use with GPIB 7 address, use "GPIB::7::INSTR" address format */
+        strcpy(VISA_address,"GPIB::");
+        strcat(VISA_address,GPIB_Address);
+        strcat(VISA_address,"::INSTR");
+    }
+    else{ /* For use with COM2 port, use "ASRL2::INSTR" address format */
+        strcpy(VISA_address,"ASRL");
+        strcat(VISA_address,COM_Address);
+        strcat(VISA_address,"::INSTR");
+    }
+    /* Open communication session with the power supply */
+    ErrorStatus = viOpenDefaultRM(&defaultRM);
+    ErrorStatus = viOpen(defaultRM,VISA_address,0,0,&power_supply);
+    CheckError((char *)"Unable to open port");
+    if(!bGPIB)
+        SendSCPI((char *)"System:Remote"); //added to cast as char *
+}//end openport()
+
+
+
+
+void ClosePort()
+{
+    /* Close the communication port */
+    viClose(power_supply);
+    viClose(defaultRM);
+}
+
+
+void CheckError(char* pMessage)
+{
+    if (ErrorStatus < VI_SUCCESS){
+        printf("\n %s",pMessage);
+        ClosePort();
+        exit(0);
+    }
+}
+void delay(clock_t wait)
+{
+    clock_t goal;
+    goal = wait + clock();
+    while( goal > clock() ) ;
+}
+
+
+void SendSCPI(char* pString)
+{
+    char* pdest;
+    strcpy(commandString,pString);
+    strcat(commandString,(ViString)"\n");
+    ErrorStatus = viPrintf(power_supply,commandString);
+    CheckError((ViString)"Can’t Write to Driver");
+    if (bGPIB == 0)
+        delay(1000); /* Unit is milliseconds */
+    pdest = strchr(commandString, '?'); /* Search for query command */
+    if( pdest != NULL ){
+        ErrorStatus = viScanf(power_supply,(char *)"%s",&ReadBuffer);
+        CheckError((ViString)"Can’t Read From Driver");
+
+        strcpy(pString,ReadBuffer);
+    }
+}
+
+
