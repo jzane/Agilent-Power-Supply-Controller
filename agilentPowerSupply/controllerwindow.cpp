@@ -2,6 +2,8 @@
 #include "ui_controllerwindow.h"
 #include <commfuncs.h>
 #include <visa.h>
+#include <sstream> //for long to string conversion
+
 
 
 ViSession defaultRM; /* Resource manager id */
@@ -32,11 +34,19 @@ ControllerWindow::ControllerWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ControllerWindow)
 {
+
     ui->setupUi(this);
+    ui->ControllerWindow::lineEdit->setText("1"); //default to com port 1
+    ui->ControllerWindow::radioButton_2->setChecked(true); //default to output off radio checked
+    SendSCPI((char*)"Output off"); //actually send output off command
+
 }
 
 ControllerWindow::~ControllerWindow()
 {
+    SendSCPI((char*) "*RST"); //resets device
+    SendSCPI((char*)"Output off");
+
     delete ui;
 }
 
@@ -45,7 +55,7 @@ void ControllerWindow::on_pushButton_clicked()
     OpenPort(); //opens port with comm number specifier
     sprintf_s(Buffer, "*IDN?");
     SendSCPI(Buffer);
-    //getting inst. ID string
+    //getting instrument ID string
     ui->ControllerWindow::label->setText(Buffer);
 }
 
@@ -54,6 +64,10 @@ void ControllerWindow::on_pushButton_clicked()
 //OPENS PORT FOR COMM
 void ControllerWindow::OpenPort()
 {
+    QString comm;
+    comm = ui->ControllerWindow::lineEdit->text();
+    std::string str = comm.toStdString();
+    const char * p = str.c_str(); //converting QString to char *
 
     char GPIB_Address[3];
     char COM_Address[2];
@@ -61,7 +75,7 @@ void ControllerWindow::OpenPort()
     if(bGPIB)
         strcpy(GPIB_Address,"5"); /* Select GPIB address between 0 to 30*/
     else
-        strcpy(COM_Address,"4"); /* Set the number to 2 for COM2 port */
+        strcpy(COM_Address,p); /* Set the number to 2 for COM2 port */
     if(bGPIB){ /* For use with GPIB 7 address, use "GPIB::7::INSTR" address format */
         strcpy(VISA_address,"GPIB::");
         strcat(VISA_address,GPIB_Address);
@@ -94,9 +108,17 @@ void ControllerWindow::ClosePort()
 void ControllerWindow::CheckError(char* pMessage)
 {
     if (ErrorStatus < VI_SUCCESS){
-        printf("\n %s",pMessage);
+        int error = (int)ErrorStatus; //casting long to int
+
+        ui->ControllerWindow::label_5->setText(pMessage);
+
         ClosePort();
-        exit(0);
+        //exit(0); STOP CLOSING THE PROGRAM, JESUS FUCK
+    }
+    else
+    {
+
+        ui->ControllerWindow::label_5->setText("");
     }
 }
 void ControllerWindow::delay(clock_t wait)
@@ -115,7 +137,7 @@ void ControllerWindow::SendSCPI(char* pString)
     ErrorStatus = viPrintf(power_supply,commandString);
     CheckError((ViString)"Can’t Write to Driver");
     if (bGPIB == 0)
-        delay(1000); /* Unit is milliseconds */
+        delay(200); /* Unit is milliseconds */
     pdest = strchr(commandString, '?'); /* Search for query command */
     if( pdest != NULL ){
         ErrorStatus = viScanf(power_supply,(char *)"%s",&ReadBuffer);
@@ -125,3 +147,68 @@ void ControllerWindow::SendSCPI(char* pString)
     }
 }
 
+//the voltage "Set!" button
+void ControllerWindow::on_pushButton_2_clicked()
+{
+    QString mess;
+    mess = (QString)"Current " + ui->ControllerWindow::lineEdit_2->text();
+    std::string str1 = mess.toStdString();
+    const char* messSend = str1.c_str();
+    //above: converting message to char* to be able to send through scpi func "SendSCPI"
+    SendSCPI((char*)"*RST"); /* Set power-on condition */
+    SendSCPI((char*)messSend); /* Set current limit to 'x' A */
+    SendSCPI((char*)"Output on"); /* Turn output on */
+
+    //set voltage
+    std::string voltage1 = "VOLT " + (ui->ControllerWindow::lineEdit_3->text()).toStdString() + "\n";
+    const char * volt = voltage1.c_str();
+    SendSCPI((char*)volt);
+    ui->ControllerWindow::radioButton->setChecked(true);
+
+    //ErrorStatus = viPrintf(power_supply, "Volt %f\n", (ViString)voltage1);
+    //delay(300);/* 300 msec wating for RS-232 interface*/
+    //CheckError((char*)"Unable to set voltage");
+
+
+}
+
+void ControllerWindow::on_radioButton_clicked()
+{
+    SendSCPI((char*)"Output on");
+}
+
+void ControllerWindow::on_radioButton_2_clicked()
+{
+    SendSCPI((char*)"Output off");
+}
+
+
+
+/*
+//FOR OUTPUT 2
+//the voltage "Set!" button
+void ControllerWindow::on_pushButton_3_clicked()
+{
+    QString mess2;
+    mess2 = (QString)"Current " + ui->ControllerWindow::lineEdit_4->text();
+    std::string str2 = mess.toStdString();
+    const char* messSend1 = str2.c_str();
+    //above: converting message to char* to be able to send through scpi func "SendSCPI"
+    SendSCPI((char*)"*RST"); // Set power-on condition
+    SendSCPI((char*)messSend1); // Set current limit to 'x' A
+    SendSCPI((char*)"Output on"); // Turn output on
+
+    //set voltage
+    std::string voltage1 = "VOLT " + (ui->ControllerWindow::lineEdit_3->text()).toStdString() + "\n";
+    const char * volt = voltage1.c_str();
+    SendSCPI((char*)volt);
+    ui->ControllerWindow::radioButton->setChecked(true);
+
+    //ErrorStatus = viPrintf(power_supply, "Volt %f\n", (ViString)voltage1);
+    //delay(300);// 300 msec wating for RS-232 interface
+    //CheckError((char*)"Unable to set voltage");
+
+
+}
+
+*/
