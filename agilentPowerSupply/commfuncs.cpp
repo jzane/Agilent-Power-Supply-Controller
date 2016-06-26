@@ -1,58 +1,7 @@
-#include "controllerwindow.h"
-#include "ui_controllerwindow.h"
-#include <commfuncs.h>
-#include <visa.h>
-
-
-ViSession defaultRM; /* Resource manager id */
-ViSession power_supply; /* Identifies power supply */
-int bGPIB = 0; /* Set the number to 0 for use with the RS-232
-               interface */
-long ErrorStatus; /* VISA Error code */
-char commandString[256];
-char ReadBuffer[256];
-void delay(clock_t wait);
-void SendSCPI(char* pString);
-void CheckError(char* pMessage);
-
-/* shouldnt need these b/c prototypes are in .h file
-void OpenPort();
-void ClosePort();
-void SendSCPI(char *);
-*/
-
-double voltage; /* Value of voltage sent to power supply */
-char Buffer[256]; /* String returned from power supply */
-double current; /* Value of current output of power supply */
-
-
-
-
-ControllerWindow::ControllerWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::ControllerWindow)
-{
-    ui->setupUi(this);
-}
-
-ControllerWindow::~ControllerWindow()
-{
-    delete ui;
-}
-
-void ControllerWindow::on_pushButton_clicked()
-{
-    OpenPort(); //opens port with comm number specifier
-    sprintf_s(Buffer, "*IDN?");
-    SendSCPI(Buffer);
-    //getting inst. ID string
-    ui->ControllerWindow::label->setText(Buffer);
-}
-
 
 /**************************/
 //OPENS PORT FOR COMM
-void ControllerWindow::OpenPort()
+void OpenPort()
 {
 
     char GPIB_Address[3];
@@ -83,7 +32,8 @@ void ControllerWindow::OpenPort()
 
 
 
-void ControllerWindow::ClosePort()
+
+void ClosePort()
 {
     /* Close the communication port */
     viClose(power_supply);
@@ -91,7 +41,7 @@ void ControllerWindow::ClosePort()
 }
 
 
-void ControllerWindow::CheckError(char* pMessage)
+void CheckError(char* pMessage)
 {
     if (ErrorStatus < VI_SUCCESS){
         printf("\n %s",pMessage);
@@ -99,7 +49,7 @@ void ControllerWindow::CheckError(char* pMessage)
         exit(0);
     }
 }
-void ControllerWindow::delay(clock_t wait)
+void delay(clock_t wait)
 {
     clock_t goal;
     goal = wait + clock();
@@ -107,7 +57,7 @@ void ControllerWindow::delay(clock_t wait)
 }
 
 
-void ControllerWindow::SendSCPI(char* pString)
+void SendSCPI(char*)
 {
     char* pdest;
     strcpy(commandString,pString);
@@ -115,7 +65,7 @@ void ControllerWindow::SendSCPI(char* pString)
     ErrorStatus = viPrintf(power_supply,commandString);
     CheckError((ViString)"Can’t Write to Driver");
     if (bGPIB == 0)
-        delay(1000); /* Unit is milliseconds */
+        delay(100); /* Unit is milliseconds */
     pdest = strchr(commandString, '?'); /* Search for query command */
     if( pdest != NULL ){
         ErrorStatus = viScanf(power_supply,(char *)"%s",&ReadBuffer);
@@ -124,4 +74,3 @@ void ControllerWindow::SendSCPI(char* pString)
         strcpy(pString,ReadBuffer);
     }
 }
-
