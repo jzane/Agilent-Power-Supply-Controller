@@ -32,6 +32,8 @@ private slots:
 
     void on_radioButton_2_clicked();
 
+
+
 private:
     Ui::ControllerWindow *ui;
 };

@@ -13,13 +13,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        controllerwindow.cpp \
-    commfuncs.cpp
+        controllerwindow.cpp
 
 HEADERS  += controllerwindow.h \
     visa.h \
-    visatype.h \
-    commfuncs.h
+    visatype.h
 
 FORMS    += controllerwindow.ui
 
@@ -30,3 +28,4 @@ DEPENDPATH += $$PWD/.
 
 win32:!win32-g++: PRE_TARGETDEPS += $$PWD/lib/visa32.lib
 else:unix|win32-g++: PRE_TARGETDEPS += $$PWD/lib/libvisa32.a
+

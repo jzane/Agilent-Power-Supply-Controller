@@ -1,6 +1,5 @@
 #include "controllerwindow.h"
 #include "ui_controllerwindow.h"
-#include <commfuncs.h>
 #include <visa.h>
 #include <sstream> //for long to string conversion
 
@@ -170,6 +169,7 @@ void ControllerWindow::on_pushButton_2_clicked()
     //CheckError((char*)"Unable to set voltage");
 
 
+
 }
 
 void ControllerWindow::on_radioButton_clicked()
@@ -184,19 +184,23 @@ void ControllerWindow::on_radioButton_2_clicked()
 
 
 
+//not going to be in version 1.0.0
+
 /*
+
 //FOR OUTPUT 2
 //the voltage "Set!" button
 void ControllerWindow::on_pushButton_3_clicked()
 {
+    SendSCPI((char*)"INST OUT 2"); //channel 2
     QString mess2;
-    mess2 = (QString)"Current " + ui->ControllerWindow::lineEdit_4->text();
-    std::string str2 = mess.toStdString();
+    mess2 = (QString)"Current " + ui->ControllerWindow::lineEdit_4->text(); //second source only
+    std::string str2 = mess2.toStdString();
     const char* messSend1 = str2.c_str();
     //above: converting message to char* to be able to send through scpi func "SendSCPI"
-    SendSCPI((char*)"*RST"); // Set power-on condition
+
     SendSCPI((char*)messSend1); // Set current limit to 'x' A
-    SendSCPI((char*)"Output on"); // Turn output on
+    SendSCPI((char*)"Output on"); // Turn output on for output 2
 
     //set voltage
     std::string voltage1 = "VOLT " + (ui->ControllerWindow::lineEdit_3->text()).toStdString() + "\n";
@@ -207,8 +211,5 @@ void ControllerWindow::on_pushButton_3_clicked()
     //ErrorStatus = viPrintf(power_supply, "Volt %f\n", (ViString)voltage1);
     //delay(300);// 300 msec wating for RS-232 interface
     //CheckError((char*)"Unable to set voltage");
-
-
 }
-
 */

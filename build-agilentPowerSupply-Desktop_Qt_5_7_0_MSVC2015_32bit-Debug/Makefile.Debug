@@ -164,7 +164,9 @@ compiler_rcc_clean:
 compiler_moc_header_make_all: debug\moc_controllerwindow.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) debug\moc_controllerwindow.cpp
-debug\moc_controllerwindow.cpp: D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\QMainWindow \
+debug\moc_controllerwindow.cpp: ..\agilentPowerSupply\visa.h \
+		..\agilentPowerSupply\visatype.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\QMainWindow \
 		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qmainwindow.h \
 		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qwidget.h \
 		D:\Programs\Qt\5.7\msvc2015\include\QtGui\qwindowdefs.h \
@@ -290,6 +292,8 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 ####### Compile
 
 debug\main.obj: ..\agilentPowerSupply\main.cpp ../agilentPowerSupply/controllerwindow.h \
+		../agilentPowerSupply/visa.h \
+		../agilentPowerSupply/visatype.h \
 		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\QMainWindow \
 		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qmainwindow.h \
 		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qwidget.h \
@@ -399,6 +403,8 @@ debug\main.obj: ..\agilentPowerSupply\main.cpp ../agilentPowerSupply/controllerw
 		D:\Programs\Qt\5.7\msvc2015\include\QtGui\qinputmethod.h
 
 debug\controllerwindow.obj: ..\agilentPowerSupply\controllerwindow.cpp ../agilentPowerSupply/controllerwindow.h \
+		../agilentPowerSupply/visa.h \
+		../agilentPowerSupply/visatype.h \
 		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\QMainWindow \
 		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qmainwindow.h \
 		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qwidget.h \
@@ -499,7 +505,67 @@ debug\controllerwindow.obj: ..\agilentPowerSupply\controllerwindow.cpp ../agilen
 		D:\Programs\Qt\5.7\msvc2015\include\QtGui\qtouchdevice.h \
 		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qtabwidget.h \
 		D:\Programs\Qt\5.7\msvc2015\include\QtGui\qicon.h \
-		ui_controllerwindow.h
+		ui_controllerwindow.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtCore\QVariant \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\QAction \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qaction.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qactiongroup.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\QApplication \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qapplication.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtCore\qcoreapplication.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtCore\qeventloop.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qdesktopwidget.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtGui\qguiapplication.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtGui\qinputmethod.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\QButtonGroup \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qbuttongroup.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\QFrame \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qframe.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\QGridLayout \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qgridlayout.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qlayout.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qlayoutitem.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qboxlayout.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\QHeaderView \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qheaderview.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qabstractitemview.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qabstractscrollarea.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtCore\qabstractitemmodel.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtCore\qitemselectionmodel.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qabstractitemdelegate.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qstyleoption.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qabstractspinbox.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtGui\qvalidator.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtCore\qregularexpression.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qslider.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qabstractslider.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qstyle.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qtabbar.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qrubberband.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\QLCDNumber \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qlcdnumber.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\QLabel \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qlabel.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\QLineEdit \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qlineedit.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtGui\qtextcursor.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtGui\qtextformat.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtGui\qpen.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtGui\qtextoption.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\QMenuBar \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qmenubar.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qmenu.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\QPushButton \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qpushbutton.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qabstractbutton.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\QRadioButton \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qradiobutton.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\QStatusBar \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qstatusbar.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\QToolBar \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\qtoolbar.h \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\QVBoxLayout \
+		D:\Programs\Qt\5.7\msvc2015\include\QtWidgets\QWidget
 
 debug\moc_controllerwindow.obj: debug\moc_controllerwindow.cpp 
 
