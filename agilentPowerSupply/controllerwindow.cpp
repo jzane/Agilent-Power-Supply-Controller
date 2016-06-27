@@ -235,9 +235,10 @@ void ControllerWindow::on_pushButton_3_clicked()
     double stepSize = 0.1; //using default stepsize of 0.1v
     //this stepsize gives a pretty good balance of resolution and time dependancies
 
-    int delayTime;
-    int steps = (((ui->ControllerWindow::lineEdit_5->text()).toDouble() + stepSize) - ((ui->ControllerWindow::lineEdit_4->text()).toDouble())) * 10;//gives # of steps
-    delayTime = (((ui->ControllerWindow::lineEdit_6->text().toInt())/steps)*1000)-70; //dont forget to convert to millis
+    double delayTime;
+    double steps = (((ui->ControllerWindow::lineEdit_5->text()).toDouble() + stepSize) - ((ui->ControllerWindow::lineEdit_4->text()).toDouble())) * 10;//gives # of steps
+    delayTime = (((ui->ControllerWindow::lineEdit_6->text().toDouble())/steps))-0.07; //dont forget to convert to millis
+    delayTime = delayTime *1000; //millis
     //to kep it going negative
     if (delayTime < 0)
     {
@@ -245,7 +246,7 @@ void ControllerWindow::on_pushButton_3_clicked()
     }
     //this gives a max slope of: 1.429 V/S
 
-    for ( voltage = (ui->ControllerWindow::lineEdit_4->text()).toDouble(); voltage <= (ui->ControllerWindow::lineEdit_5->text()).toDouble() + stepSize; voltage += stepSize)
+    for ( voltage = (ui->ControllerWindow::lineEdit_4->text()).toDouble(); voltage <= (ui->ControllerWindow::lineEdit_5->text()).toDouble(); voltage += stepSize)
     {
         std::string str = to_string(voltage); //now a string
         std::string message = "VOLT " + str; //create message
@@ -253,12 +254,15 @@ void ControllerWindow::on_pushButton_3_clicked()
         SendSCPI((char *)p);
         delay(delayTime);
 
-        //stop the ramp if stop button is pushed
-        if(ui->pushButton_4->isChecked())
-        {
-            SendSCPI((char*)"*RST"); //reset device
-        }
+        //TODO: be able to stop the ramp when a 'stop/reset'button is pressed
     }
+
+    //in case the for lop stops one stepsize short of final voltage
+    voltage = (ui->ControllerWindow::lineEdit_5->text()).toDouble();
+    std::string str = to_string(voltage); //now a string
+    std::string message = "VOLT " + str; //create message
+    const char * p = message.c_str(); //convert to c_string->char array
+    SendSCPI((char *)p);
 }
 
 
@@ -266,7 +270,7 @@ void ControllerWindow::on_pushButton_3_clicked()
 
 std::string ControllerWindow::to_string(double x)
 {
-  std::ostringstream ss;
-  ss << x;
-  return ss.str();
+    std::ostringstream ss;
+    ss << x;
+    return ss.str();
 }

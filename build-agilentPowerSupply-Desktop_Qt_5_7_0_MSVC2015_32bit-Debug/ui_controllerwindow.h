@@ -46,6 +46,7 @@ public:
     QWidget *tab;
     QPushButton *pushButton_2;
     QLabel *label_8;
+    QLabel *label_12;
     QLabel *label_6;
     QLabel *label_7;
     QLineEdit *lineEdit_2;
@@ -55,7 +56,6 @@ public:
     QLabel *label_13;
     QLineEdit *lineEdit_7;
     QLabel *label_14;
-    QPushButton *pushButton_4;
     QLabel *label_9;
     QLabel *label_10;
     QLabel *label_11;
@@ -117,7 +117,7 @@ public:
         label_4->setGeometry(QRect(20, 390, 33, 16));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
-        tabWidget->setGeometry(QRect(10, 160, 631, 201));
+        tabWidget->setGeometry(QRect(10, 150, 631, 201));
         tabWidget->setAutoFillBackground(true);
         tabWidget->setTabShape(QTabWidget::Rounded);
         tabWidget->setIconSize(QSize(24, 24));
@@ -131,6 +131,9 @@ public:
         label_8 = new QLabel(tab);
         label_8->setObjectName(QStringLiteral("label_8"));
         label_8->setGeometry(QRect(60, 40, 71, 21));
+        label_12 = new QLabel(tab);
+        label_12->setObjectName(QStringLiteral("label_12"));
+        label_12->setGeometry(QRect(420, 150, 191, 16));
         label_6 = new QLabel(tab);
         label_6->setObjectName(QStringLiteral("label_6"));
         label_6->setGeometry(QRect(51, 71, 128, 19));
@@ -162,12 +165,6 @@ public:
         label_14->setObjectName(QStringLiteral("label_14"));
         label_14->setGeometry(QRect(430, 20, 128, 21));
         label_14->setTextFormat(Qt::AutoText);
-        pushButton_4 = new QPushButton(tab_2);
-        pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
-        pushButton_4->setGeometry(QRect(320, 70, 91, 41));
-        pushButton_4->setFont(font);
-        pushButton_4->setCursor(QCursor(Qt::PointingHandCursor));
-        pushButton_4->setCheckable(false);
         label_9 = new QLabel(tab_2);
         label_9->setObjectName(QStringLiteral("label_9"));
         label_9->setGeometry(QRect(10, 21, 116, 16));
@@ -233,13 +230,13 @@ public:
 "Set!\n"
 "", 0));
         label_8->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Output 1</span></p></body></html>", 0));
+        label_12->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:10pt; text-decoration: underline;\">Note</span><span style=\" font-size:10pt;\">: Maximum current is 1.4</span><span style=\" font-size:10pt; font-weight:600;\"> A</span></p></body></html>", 0));
         label_6->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Current Limit (</span><span style=\" font-size:12pt; font-weight:600; text-decoration: underline;\">A</span><span style=\" font-size:12pt; text-decoration: underline;\">)</span><span style=\" font-size:12pt; text-decoration: underline;\">:</span></p></body></html>", 0));
         label_7->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Voltage (</span><span style=\" font-size:12pt; font-weight:600; text-decoration: underline;\">V</span><span style=\" font-size:12pt; text-decoration: underline;\">):</span></p></body></html>", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("ControllerWindow", "Manual Control", 0));
         pushButton_3->setText(QApplication::translate("ControllerWindow", "Start", 0));
         label_13->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:10pt; text-decoration: underline;\">Note</span><span style=\" font-size:10pt;\">: Maximum slope is 1.4 </span><span style=\" font-size:10pt; font-weight:600;\">V/S</span></p></body></html>", 0));
         label_14->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Current Limit (</span><span style=\" font-size:12pt; font-weight:600; text-decoration: underline;\">A</span><span style=\" font-size:12pt; text-decoration: underline;\">)</span><span style=\" font-size:12pt; text-decoration: underline;\">:</span></p></body></html>", 0));
-        pushButton_4->setText(QApplication::translate("ControllerWindow", "Stop/Reset", 0));
         label_9->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">starting voltage (</span><span style=\" font-size:10pt; font-weight:600;\">V</span><span style=\" font-size:10pt;\">):</span></p></body></html>", 0));
         label_10->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Ending voltage (</span><span style=\" font-size:10pt; font-weight:600;\">V</span><span style=\" font-size:10pt;\">):</span></p></body></html>", 0));
         label_11->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Rise time (</span><span style=\" font-size:10pt; font-weight:600;\">S</span><span style=\" font-size:10pt;\">):</span></p></body></html>", 0));
