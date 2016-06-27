@@ -217,7 +217,7 @@ public:
 
     void retranslateUi(QMainWindow *ControllerWindow)
     {
-        ControllerWindow->setWindowTitle(QApplication::translate("ControllerWindow", "Agilent Power Supply Controller v0.0.0", 0));
+        ControllerWindow->setWindowTitle(QApplication::translate("ControllerWindow", "Agilent Power Supply Controller v0.1.2 Beta", 0));
         pushButton->setText(QApplication::translate("ControllerWindow", "connect!", 0));
         label->setText(QString());
         label_2->setText(QApplication::translate("ControllerWindow", "Device ID: ", 0));
