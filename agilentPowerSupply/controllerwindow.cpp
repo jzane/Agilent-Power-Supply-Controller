@@ -2,6 +2,9 @@
 #include "ui_controllerwindow.h"
 #include <visa.h>
 #include <sstream> //for long to string conversion
+#include <string>
+#include <cstring>
+#include <iostream>
 
 
 
@@ -136,7 +139,7 @@ void ControllerWindow::SendSCPI(char* pString)
     ErrorStatus = viPrintf(power_supply,commandString);
     CheckError((ViString)"Can’t Write to Driver");
     if (bGPIB == 0)
-        delay(200); /* Unit is milliseconds */
+        delay(70); /* Unit is milliseconds */ //NEEDS TO BE HERE!!!!!!!!!!!!!!!!!!!!!
     pdest = strchr(commandString, '?'); /* Search for query command */
     if( pdest != NULL ){
         ErrorStatus = viScanf(power_supply,(char *)"%s",&ReadBuffer);
@@ -213,3 +216,57 @@ void ControllerWindow::on_pushButton_3_clicked()
     //CheckError((char*)"Unable to set voltage");
 }
 */
+
+
+//manually specifying the voltage ramp
+void ControllerWindow::on_pushButton_3_clicked()
+{
+
+    //limit current first, same as in manual mode
+    QString mess;
+    mess = (QString)"Current " + ui->ControllerWindow::lineEdit_7->text();
+    std::string str1 = mess.toStdString();
+    const char* messSend = str1.c_str();
+    //above: converting message to char* to be able to send through scpi func "SendSCPI"
+
+    SendSCPI((char*)messSend); /* Set current limit to 'x' A */
+
+
+    double stepSize = 0.1; //using default stepsize of 0.1v
+    //this stepsize gives a pretty good balance of resolution and time dependancies
+
+    int delayTime;
+    int steps = (((ui->ControllerWindow::lineEdit_5->text()).toDouble() + stepSize) - ((ui->ControllerWindow::lineEdit_4->text()).toDouble())) * 10;//gives # of steps
+    delayTime = (((ui->ControllerWindow::lineEdit_6->text().toInt())/steps)*1000)-70; //dont forget to convert to millis
+    //to kep it going negative
+    if (delayTime < 0)
+    {
+        delayTime = 0;
+    }
+    //this gives a max slope of: 1.429 V/S
+
+    for ( voltage = (ui->ControllerWindow::lineEdit_4->text()).toDouble(); voltage <= (ui->ControllerWindow::lineEdit_5->text()).toDouble() + stepSize; voltage += stepSize)
+    {
+        std::string str = to_string(voltage); //now a string
+        std::string message = "VOLT " + str; //create message
+        const char * p = message.c_str(); //convert to c_string->char array
+        SendSCPI((char *)p);
+        delay(delayTime);
+
+        //stop the ramp if stop button is pushed
+        if(ui->pushButton_4->isChecked())
+        {
+            SendSCPI((char*)"*RST"); //reset device
+        }
+    }
+}
+
+
+//function used to convert from double to string
+
+std::string ControllerWindow::to_string(double x)
+{
+  std::ostringstream ss;
+  ss << x;
+  return ss.str();
+}

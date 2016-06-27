@@ -21,6 +21,7 @@ public:
     void  CheckError(char* pMessage);
     void delay(clock_t wait);
     void SendSCPI(char*);
+    std::string ControllerWindow::to_string(double x); //convert double to string used in voltage ramping
 
 
 private slots:
@@ -32,7 +33,7 @@ private slots:
 
     void on_radioButton_2_clicked();
 
-
+    void on_pushButton_3_clicked();
 
 private:
     Ui::ControllerWindow *ui;
