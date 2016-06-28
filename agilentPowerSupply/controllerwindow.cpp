@@ -247,6 +247,12 @@ void ControllerWindow::on_pushButton_3_clicked()
     int numSteps = (1/delayTime) * riseTime; //number of steps, and integer
 
 
+
+
+    //try to use  an array to grab values out of, might be faster
+    //possibly a stack?  first in last out kidna thing?
+double voltges []; //array to hold voltages
+
     //not entering either conditional statements
     if ((Vstart - Vend) <= 0) //positive slope
     {
