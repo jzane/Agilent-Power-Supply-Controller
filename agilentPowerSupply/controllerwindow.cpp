@@ -235,38 +235,51 @@ void ControllerWindow::on_pushButton_3_clicked()
 
     double stepSize; //this will change
 
-    double delayTime = 200; //const value of 'x' milliseconds
-double Vstart = ui->ControllerWindow::lineEdit_4->text().toDouble(); //starting voltage
-double Vend = ui->ControllerWindow::lineEdit_5->text().toDouble();//ending voltage
-double riseTime = (ui->ControllerWindow::lineEdit_6->text().toDouble()) * 1000; //rise time converted to milliseconds
-stepSize = (delayTime) * (1/riseTime) * (Vend-Vstart); //units will be V/step
-int numSteps = (1/delayTime) * riseTime; //number of steps, and integer
+    double delayTime = 70; //const value of 'x' milliseconds
+    double Vstart;
+    Vstart= ui->ControllerWindow::lineEdit_4->text().toDouble(); //starting voltage
+    double Vend;
+    Vend= ui->ControllerWindow::lineEdit_5->text().toDouble();//ending voltage
+    double riseTime;
+    riseTime = (ui->ControllerWindow::lineEdit_6->text().toDouble()) * 1000; //rise time converted to milliseconds
+    stepSize;
+    stepSize= (delayTime) * (1/riseTime) * (Vend-Vstart); //units will be V/step
+    int numSteps = (1/delayTime) * riseTime; //number of steps, and integer
 
 
-//not entering either conditional statements
-if ((Vstart - Vend) <= 0) //positive slope
-{
-    for (double voltage = Vstart; voltage >= Vend; voltage = voltage += stepSize)
+    //not entering either conditional statements
+    if ((Vstart - Vend) <= 0) //positive slope
     {
-        std::string str = to_string(voltage); //now a string
+        for (double voltage = Vstart; voltage <= Vend; voltage = voltage += stepSize)
+        {
+            std::string str = to_string(voltage); //now a string
+            std::string message = "VOLT " + str; //create message
+            const char * p = message.c_str(); //convert to c_string->char array
+            SendSCPI((char *)p);
+            delay(delayTime);
+        }
+        std::string str = to_string(Vend); //now a string
         std::string message = "VOLT " + str; //create message
         const char * p = message.c_str(); //convert to c_string->char array
         SendSCPI((char *)p);
-        delay(delayTime);
     }
-}
 
-else //negative slope
-{
-    for (double voltage = Vstart; voltage <= Vend; voltage = voltage -= stepSize)
+    else if ((Vstart - Vend) > 0)//negative slope
     {
-        std::string str = to_string(voltage); //now a string
+        for (double voltage = Vstart; voltage >= Vend; voltage = voltage += stepSize)
+        {
+            std::string str = to_string(voltage); //now a string
+            std::string message = "VOLT " + str; //create message
+            const char * p = message.c_str(); //convert to c_string->char array
+            SendSCPI((char *)p);
+            delay(delayTime);
+        }
+        std::string str = to_string(Vend); //now a string
         std::string message = "VOLT " + str; //create message
         const char * p = message.c_str(); //convert to c_string->char array
         SendSCPI((char *)p);
-        delay(delayTime);
     }
-}
+
 
 
     //V0.01.2 WAY OF DOING IT
