@@ -94,6 +94,7 @@ void ControllerWindow::OpenPort()
     CheckError((char *)"Unable to open port");
     if(!bGPIB)
         SendSCPI((char *)"System:Remote"); //added to cast as char *
+    delay(500);
 }//end openport()
 
 
@@ -232,10 +233,46 @@ void ControllerWindow::on_pushButton_3_clicked()
     SendSCPI((char*)messSend); /* Set current limit to 'x' A */
 
 
-    double stepSize = 0.1; //using default stepsize of 0.1v
-    //this stepsize gives a pretty good balance of resolution and time dependancies
+    double stepSize; //this will change
 
-    double delayTime;
+    double delayTime = 200; //const value of 'x' milliseconds
+double Vstart = ui->ControllerWindow::lineEdit_4->text().toDouble(); //starting voltage
+double Vend = ui->ControllerWindow::lineEdit_5->text().toDouble();//ending voltage
+double riseTime = (ui->ControllerWindow::lineEdit_6->text().toDouble()) * 1000; //rise time converted to milliseconds
+stepSize = (delayTime) * (1/riseTime) * (Vend-Vstart); //units will be V/step
+int numSteps = (1/delayTime) * riseTime; //number of steps, and integer
+
+
+//not entering either conditional statements
+if ((Vstart - Vend) <= 0) //positive slope
+{
+    for (double voltage = Vstart; voltage >= Vend; voltage = voltage += stepSize)
+    {
+        std::string str = to_string(voltage); //now a string
+        std::string message = "VOLT " + str; //create message
+        const char * p = message.c_str(); //convert to c_string->char array
+        SendSCPI((char *)p);
+        delay(delayTime);
+    }
+}
+
+else //negative slope
+{
+    for (double voltage = Vstart; voltage <= Vend; voltage = voltage -= stepSize)
+    {
+        std::string str = to_string(voltage); //now a string
+        std::string message = "VOLT " + str; //create message
+        const char * p = message.c_str(); //convert to c_string->char array
+        SendSCPI((char *)p);
+        delay(delayTime);
+    }
+}
+
+
+    //V0.01.2 WAY OF DOING IT
+    //LIMITATIONS: CAN'T CHANGE STEP SIZE, CAN'T DO NEGATIVE SLOPE
+    //WANT TO MAXIMIZE RESOLUTION, THEREFORE MINIMIZE STEP SIZE
+    /*
     double steps = (((ui->ControllerWindow::lineEdit_5->text()).toDouble() + stepSize) - ((ui->ControllerWindow::lineEdit_4->text()).toDouble())) * 10;//gives # of steps
     delayTime = (((ui->ControllerWindow::lineEdit_6->text().toDouble())/steps))-0.07; //dont forget to convert to millis
     delayTime = delayTime *1000; //millis
@@ -263,6 +300,7 @@ void ControllerWindow::on_pushButton_3_clicked()
     std::string message = "VOLT " + str; //create message
     const char * p = message.c_str(); //convert to c_string->char array
     SendSCPI((char *)p);
+    */
 }
 
 
