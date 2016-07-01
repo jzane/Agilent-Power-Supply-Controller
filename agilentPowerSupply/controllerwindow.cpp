@@ -39,8 +39,11 @@ ControllerWindow::ControllerWindow(QWidget *parent) :
 
     ui->setupUi(this);
     ui->ControllerWindow::lineEdit->setText("1"); //default to com port 1
+    ui->ControllerWindow::lineEdit_2->setText("1.4"); //default to com port 1
+    ui->ControllerWindow::lineEdit_7->setText("1.4"); //default to com port 1
     ui->ControllerWindow::radioButton_2->setChecked(true); //default to output off radio checked
-    SendSCPI((char*)"Output off"); //actually send output off command
+
+
 
 }
 
@@ -158,7 +161,8 @@ void ControllerWindow::on_pushButton_2_clicked()
     std::string str1 = mess.toStdString();
     const char* messSend = str1.c_str();
     //above: converting message to char* to be able to send through scpi func "SendSCPI"
-    SendSCPI((char*)"*RST"); /* Set power-on condition */
+
+    //SendSCPI((char*)"*RST"); /* Set power-on condition... responsible for the V dropping to zero every time change value
     SendSCPI((char*)messSend); /* Set current limit to 'x' A */
     SendSCPI((char*)"Output on"); /* Turn output on */
 
@@ -241,7 +245,7 @@ void ControllerWindow::on_pushButton_3_clicked()
     double Vend;
     Vend= ui->ControllerWindow::lineEdit_5->text().toDouble();//ending voltage
     double riseTime;
-    riseTime = (ui->ControllerWindow::lineEdit_6->text().toDouble()) * 1000; //rise time converted to milliseconds
+    riseTime = (ui->ControllerWindow::lineEdit_6->text().toDouble()) * 1000/2; //rise time converted to milliseconds NOTE: DIVIDING BY 2 B/C ITS TAKING TWICE AS LONG AS IT SHOULD
     stepSize;
     stepSize= (delayTime) * (1/riseTime) * (Vend-Vstart); //units will be V/step
     int numSteps = (1/delayTime) * riseTime; //number of steps, and integer
@@ -251,12 +255,12 @@ void ControllerWindow::on_pushButton_3_clicked()
 
     //try to use  an array to grab values out of, might be faster
     //possibly a stack?  first in last out kidna thing?
-double voltges []; //array to hold voltages
+//double voltges []; //array to hold voltages
 
     //not entering either conditional statements
     if ((Vstart - Vend) <= 0) //positive slope
     {
-        for (double voltage = Vstart; voltage <= Vend; voltage = voltage += stepSize)
+        for (voltage = Vstart; voltage <= Vend; voltage = voltage += stepSize)
         {
             std::string str = to_string(voltage); //now a string
             std::string message = "VOLT " + str; //create message

@@ -181,7 +181,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="iconSize">
      <size>
@@ -315,19 +315,6 @@ Set!
       </property>
       <property name="text">
        <string>Start</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_13">
-      <property name="geometry">
-       <rect>
-        <x>410</x>
-        <y>150</y>
-        <width>201</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline;&quot;&gt;Note&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;: Maximum slope is 1.4 &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;V/S&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="lineEdit_7">

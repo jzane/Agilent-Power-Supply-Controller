@@ -53,7 +53,6 @@ public:
     QLineEdit *lineEdit_3;
     QWidget *tab_2;
     QPushButton *pushButton_3;
-    QLabel *label_13;
     QLineEdit *lineEdit_7;
     QLabel *label_14;
     QLabel *label_9;
@@ -155,9 +154,6 @@ public:
         pushButton_3->setGeometry(QRect(320, 20, 91, 41));
         pushButton_3->setFont(font);
         pushButton_3->setCursor(QCursor(Qt::PointingHandCursor));
-        label_13 = new QLabel(tab_2);
-        label_13->setObjectName(QStringLiteral("label_13"));
-        label_13->setGeometry(QRect(410, 150, 201, 16));
         lineEdit_7 = new QLineEdit(tab_2);
         lineEdit_7->setObjectName(QStringLiteral("lineEdit_7"));
         lineEdit_7->setGeometry(QRect(430, 50, 133, 20));
@@ -209,7 +205,7 @@ public:
 
         retranslateUi(ControllerWindow);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(ControllerWindow);
@@ -235,7 +231,6 @@ public:
         label_7->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Voltage (</span><span style=\" font-size:12pt; font-weight:600; text-decoration: underline;\">V</span><span style=\" font-size:12pt; text-decoration: underline;\">):</span></p></body></html>", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("ControllerWindow", "Manual Control", 0));
         pushButton_3->setText(QApplication::translate("ControllerWindow", "Start", 0));
-        label_13->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:10pt; text-decoration: underline;\">Note</span><span style=\" font-size:10pt;\">: Maximum slope is 1.4 </span><span style=\" font-size:10pt; font-weight:600;\">V/S</span></p></body></html>", 0));
         label_14->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Current Limit (</span><span style=\" font-size:12pt; font-weight:600; text-decoration: underline;\">A</span><span style=\" font-size:12pt; text-decoration: underline;\">)</span><span style=\" font-size:12pt; text-decoration: underline;\">:</span></p></body></html>", 0));
         label_9->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">starting voltage (</span><span style=\" font-size:10pt; font-weight:600;\">V</span><span style=\" font-size:10pt;\">):</span></p></body></html>", 0));
         label_10->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Ending voltage (</span><span style=\" font-size:10pt; font-weight:600;\">V</span><span style=\" font-size:10pt;\">):</span></p></body></html>", 0));
