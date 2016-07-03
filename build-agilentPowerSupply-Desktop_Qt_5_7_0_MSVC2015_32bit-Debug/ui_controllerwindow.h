@@ -81,19 +81,28 @@ public:
         pushButton->setCursor(QCursor(Qt::PointingHandCursor));
         label = new QLabel(centralWidget);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(320, 11, 61, 16));
+        label->setGeometry(QRect(340, 11, 61, 16));
         label_2 = new QLabel(centralWidget);
         label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setGeometry(QRect(261, 11, 53, 16));
+        label_2->setGeometry(QRect(281, 11, 53, 16));
         label_5 = new QLabel(centralWidget);
         label_5->setObjectName(QStringLiteral("label_5"));
         label_5->setGeometry(QRect(59, 390, 331, 16));
+        QPalette palette;
+        QBrush brush(QColor(255, 0, 0, 255));
+        brush.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Active, QPalette::WindowText, brush);
+        palette.setBrush(QPalette::Inactive, QPalette::WindowText, brush);
+        QBrush brush1(QColor(120, 120, 120, 255));
+        brush1.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Disabled, QPalette::WindowText, brush1);
+        label_5->setPalette(palette);
         lineEdit = new QLineEdit(centralWidget);
         lineEdit->setObjectName(QStringLiteral("lineEdit"));
-        lineEdit->setGeometry(QRect(180, 10, 21, 20));
+        lineEdit->setGeometry(QRect(200, 10, 21, 20));
         label_3 = new QLabel(centralWidget);
         label_3->setObjectName(QStringLiteral("label_3"));
-        label_3->setGeometry(QRect(0, 10, 181, 20));
+        label_3->setGeometry(QRect(20, 10, 181, 20));
         line = new QFrame(centralWidget);
         line->setObjectName(QStringLiteral("line"));
         line->setGeometry(QRect(20, 90, 341, 20));
@@ -120,6 +129,7 @@ public:
         tabWidget->setAutoFillBackground(true);
         tabWidget->setTabShape(QTabWidget::Rounded);
         tabWidget->setIconSize(QSize(24, 24));
+        tabWidget->setMovable(true);
         tab = new QWidget();
         tab->setObjectName(QStringLiteral("tab"));
         pushButton_2 = new QPushButton(tab);
@@ -205,7 +215,7 @@ public:
 
         retranslateUi(ControllerWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(ControllerWindow);

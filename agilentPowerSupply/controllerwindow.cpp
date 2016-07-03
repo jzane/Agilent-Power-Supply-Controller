@@ -8,6 +8,7 @@
 
 
 
+
 ViSession defaultRM; /* Resource manager id */
 ViSession power_supply; /* Identifies power supply */
 int bGPIB = 0; /* Set the number to 0 for use with the RS-232
@@ -19,6 +20,7 @@ void delay(clock_t wait);
 void SendSCPI(char* pString);
 void CheckError(char* pMessage);
 
+
 /* shouldnt need these b/c prototypes are in .h file
 void OpenPort();
 void ClosePort();
@@ -28,8 +30,15 @@ void SendSCPI(char *);
 double voltage; /* Value of voltage sent to power supply */
 char Buffer[256]; /* String returned from power supply */
 double current; /* Value of current output of power supply */
+bool cancel_var; //var holds whether to stay in loop or not
 
 
+double stepSize; //this will change
+
+double delayTime = 70; //const value of 'x' milliseconds
+double Vstart;
+double Vend;
+double riseTime;
 
 
 ControllerWindow::ControllerWindow(QWidget *parent) :
@@ -42,6 +51,7 @@ ControllerWindow::ControllerWindow(QWidget *parent) :
     ui->ControllerWindow::lineEdit_2->setText("1.4"); //default to com port 1
     ui->ControllerWindow::lineEdit_7->setText("1.4"); //default to com port 1
     ui->ControllerWindow::radioButton_2->setChecked(true); //default to output off radio checked
+    cancel_var = false;
 
 
 
@@ -224,7 +234,7 @@ void ControllerWindow::on_pushButton_3_clicked()
 
 
 //manually specifying the voltage ramp
-void ControllerWindow::on_pushButton_3_clicked()
+void ControllerWindow::on_pushButton_3_released() //changed from clicked
 {
 
     //limit current first, same as in manual mode
@@ -237,16 +247,13 @@ void ControllerWindow::on_pushButton_3_clicked()
     SendSCPI((char*)messSend); /* Set current limit to 'x' A */
 
 
-    double stepSize; //this will change
 
-    double delayTime = 70; //const value of 'x' milliseconds
-    double Vstart;
     Vstart= ui->ControllerWindow::lineEdit_4->text().toDouble(); //starting voltage
-    double Vend;
+
     Vend= ui->ControllerWindow::lineEdit_5->text().toDouble();//ending voltage
-    double riseTime;
+
     riseTime = (ui->ControllerWindow::lineEdit_6->text().toDouble()) * 1000/2; //rise time converted to milliseconds NOTE: DIVIDING BY 2 B/C ITS TAKING TWICE AS LONG AS IT SHOULD
-    stepSize;
+    //stepSize;
     stepSize= (delayTime) * (1/riseTime) * (Vend-Vstart); //units will be V/step
     int numSteps = (1/delayTime) * riseTime; //number of steps, and integer
 
@@ -255,12 +262,14 @@ void ControllerWindow::on_pushButton_3_clicked()
 
     //try to use  an array to grab values out of, might be faster
     //possibly a stack?  first in last out kidna thing?
-//double voltges []; //array to hold voltages
+    //double voltges []; //array to hold voltages
 
     //not entering either conditional statements
+
     if ((Vstart - Vend) <= 0) //positive slope
     {
         for (voltage = Vstart; voltage <= Vend; voltage = voltage += stepSize)
+
         {
             std::string str = to_string(voltage); //now a string
             std::string message = "VOLT " + str; //create message
@@ -278,6 +287,7 @@ void ControllerWindow::on_pushButton_3_clicked()
     {
         for (double voltage = Vstart; voltage >= Vend; voltage = voltage += stepSize)
         {
+
             std::string str = to_string(voltage); //now a string
             std::string message = "VOLT " + str; //create message
             const char * p = message.c_str(); //convert to c_string->char array
@@ -335,3 +345,6 @@ std::string ControllerWindow::to_string(double x)
     ss << x;
     return ss.str();
 }
+
+
+
