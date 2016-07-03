@@ -166,6 +166,50 @@ void ControllerWindow::SendSCPI(char* pString)
 //the voltage "Set!" button
 void ControllerWindow::on_pushButton_2_clicked()
 {
+/******************************************************/
+    //error checking
+    //voltage is negative
+    if (ui->ControllerWindow::lineEdit_2->text().toDouble() < 0)
+    {
+    ui->label_5->setText("Voltage must be positive");
+    return;
+    }
+
+    //voltage is negative
+    if (ui->ControllerWindow::lineEdit_3->text().toDouble() < 0)
+    {
+    ui->label_5->setText("Voltage must be positive");
+    return;
+    }
+
+    //voltage is too high
+    if (ui->ControllerWindow::lineEdit_2->text().toDouble() > 35)
+    {
+    ui->label_5->setText("Maximum voltage is 35 V");
+    return;
+    }
+
+    //voltage is too high
+    if (ui->ControllerWindow::lineEdit_3->text().toDouble()  > 35)
+    {
+    ui->label_5->setText("Maximum voltage is 35 V");
+    return;
+    }
+
+    //current is negative
+    if (ui->ControllerWindow::lineEdit_2->text().toDouble() < 0)
+    {
+    ui->label_5->setText("Current must be positive");
+    return;
+    }
+
+    //current is too high
+    if (ui->ControllerWindow::lineEdit_2->text().toDouble() > 1.4)
+    {
+    ui->label_5->setText("Maximum current is 1.4 A");
+    return;
+    }
+
     QString mess;
     mess = (QString)"Current " + ui->ControllerWindow::lineEdit_2->text();
     std::string str1 = mess.toStdString();
@@ -237,6 +281,8 @@ void ControllerWindow::on_pushButton_3_clicked()
 void ControllerWindow::on_pushButton_3_released() //changed from clicked
 {
 
+
+
     //limit current first, same as in manual mode
     QString mess;
     mess = (QString)"Current " + ui->ControllerWindow::lineEdit_7->text();
@@ -252,12 +298,60 @@ void ControllerWindow::on_pushButton_3_released() //changed from clicked
 
     Vend= ui->ControllerWindow::lineEdit_5->text().toDouble();//ending voltage
 
-    riseTime = (ui->ControllerWindow::lineEdit_6->text().toDouble()) * 1000/2; //rise time converted to milliseconds NOTE: DIVIDING BY 2 B/C ITS TAKING TWICE AS LONG AS IT SHOULD
+    riseTime = (ui->ControllerWindow::lineEdit_6->text().toDouble()) * 1000;//2; //rise time converted to milliseconds NOTE: DIVIDING BY 2 B/C ITS TAKING TWICE AS LONG AS IT SHOULD
     //stepSize;
     stepSize= (delayTime) * (1/riseTime) * (Vend-Vstart); //units will be V/step
     int numSteps = (1/delayTime) * riseTime; //number of steps, and integer
 
+//voltage is negative
+if (Vstart < 0)
+{
+ui->label_5->setText("Voltage must be positive");
+return;
+}
 
+//voltage is negative
+if (Vend < 0)
+{
+ui->label_5->setText("Voltage must be positive");
+return;
+}
+
+
+//time is greater than 0
+if (riseTime <= 0)
+{
+ui->label_5->setText("Rise time must be greater than 0");
+return;
+}
+
+//voltage is too high
+if (Vstart > 35)
+{
+ui->label_5->setText("Maximum voltage is 35 V");
+return;
+}
+
+//voltage is too high
+if (Vend  > 35)
+{
+ui->label_5->setText("Maximum voltage is 35 V");
+return;
+}
+
+//current is negative
+if (ui->ControllerWindow::lineEdit_7->text().toDouble() < 0)
+{
+ui->label_5->setText("Current must be positive");
+return;
+}
+
+//current is too high
+if (ui->ControllerWindow::lineEdit_7->text().toDouble() > 1.4)
+{
+ui->label_5->setText("Maximum current is 1.4 A");
+return;
+}
 
 
     //try to use  an array to grab values out of, might be faster
@@ -269,13 +363,13 @@ void ControllerWindow::on_pushButton_3_released() //changed from clicked
     if ((Vstart - Vend) <= 0) //positive slope
     {
         for (voltage = Vstart; voltage <= Vend; voltage = voltage += stepSize)
-
         {
             std::string str = to_string(voltage); //now a string
             std::string message = "VOLT " + str; //create message
             const char * p = message.c_str(); //convert to c_string->char array
             SendSCPI((char *)p);
             delay(delayTime);
+            voltage += stepSize;
         }
         std::string str = to_string(Vend); //now a string
         std::string message = "VOLT " + str; //create message
@@ -287,12 +381,12 @@ void ControllerWindow::on_pushButton_3_released() //changed from clicked
     {
         for (double voltage = Vstart; voltage >= Vend; voltage = voltage += stepSize)
         {
-
             std::string str = to_string(voltage); //now a string
             std::string message = "VOLT " + str; //create message
             const char * p = message.c_str(); //convert to c_string->char array
             SendSCPI((char *)p);
             delay(delayTime);
+            voltage += stepSize;
         }
         std::string str = to_string(Vend); //now a string
         std::string message = "VOLT " + str; //create message
