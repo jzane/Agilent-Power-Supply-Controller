@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Agilent Power Supply Controller v0.1.2 Beta</string>
+   <string>Agilent Power Supply Controller v1.0.2</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QPushButton" name="pushButton">
