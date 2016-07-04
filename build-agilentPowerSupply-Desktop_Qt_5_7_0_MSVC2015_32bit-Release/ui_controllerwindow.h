@@ -14,7 +14,6 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QFrame>
-#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
@@ -23,8 +22,8 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTabWidget>
 #include <QtWidgets/QToolBar>
-#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -42,25 +41,26 @@ public:
     QFrame *line;
     QRadioButton *radioButton;
     QRadioButton *radioButton_2;
-    QLabel *label_8;
     QLabel *label_4;
-    QWidget *widget;
-    QGridLayout *gridLayout_3;
-    QGridLayout *gridLayout;
+    QTabWidget *tabWidget;
+    QWidget *tab;
+    QPushButton *pushButton_2;
+    QLabel *label_8;
+    QLabel *label_12;
     QLabel *label_6;
-    QVBoxLayout *verticalLayout;
+    QLabel *label_7;
     QLineEdit *lineEdit_2;
     QLineEdit *lineEdit_3;
-    QLabel *label_7;
-    QPushButton *pushButton_2;
-    QLabel *label_9;
-    QGridLayout *gridLayout_2;
-    QLabel *label_10;
-    QVBoxLayout *verticalLayout_2;
-    QLineEdit *lineEdit_4;
-    QLineEdit *lineEdit_5;
-    QLabel *label_11;
+    QWidget *tab_2;
     QPushButton *pushButton_3;
+    QLineEdit *lineEdit_7;
+    QLabel *label_14;
+    QLabel *label_9;
+    QLabel *label_10;
+    QLabel *label_11;
+    QLineEdit *lineEdit_6;
+    QLineEdit *lineEdit_5;
+    QLineEdit *lineEdit_4;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -69,7 +69,7 @@ public:
     {
         if (ControllerWindow->objectName().isEmpty())
             ControllerWindow->setObjectName(QStringLiteral("ControllerWindow"));
-        ControllerWindow->resize(558, 466);
+        ControllerWindow->resize(700, 473);
         centralWidget = new QWidget(ControllerWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         pushButton = new QPushButton(centralWidget);
@@ -78,21 +78,31 @@ public:
         QFont font;
         font.setPointSize(12);
         pushButton->setFont(font);
+        pushButton->setCursor(QCursor(Qt::PointingHandCursor));
         label = new QLabel(centralWidget);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(320, 11, 61, 16));
+        label->setGeometry(QRect(340, 11, 61, 16));
         label_2 = new QLabel(centralWidget);
         label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setGeometry(QRect(261, 11, 53, 16));
+        label_2->setGeometry(QRect(281, 11, 53, 16));
         label_5 = new QLabel(centralWidget);
         label_5->setObjectName(QStringLiteral("label_5"));
-        label_5->setGeometry(QRect(49, 380, 331, 16));
+        label_5->setGeometry(QRect(59, 390, 331, 16));
+        QPalette palette;
+        QBrush brush(QColor(255, 0, 0, 255));
+        brush.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Active, QPalette::WindowText, brush);
+        palette.setBrush(QPalette::Inactive, QPalette::WindowText, brush);
+        QBrush brush1(QColor(120, 120, 120, 255));
+        brush1.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Disabled, QPalette::WindowText, brush1);
+        label_5->setPalette(palette);
         lineEdit = new QLineEdit(centralWidget);
         lineEdit->setObjectName(QStringLiteral("lineEdit"));
-        lineEdit->setGeometry(QRect(180, 10, 21, 20));
+        lineEdit->setGeometry(QRect(200, 10, 21, 20));
         label_3 = new QLabel(centralWidget);
         label_3->setObjectName(QStringLiteral("label_3"));
-        label_3->setGeometry(QRect(0, 10, 181, 20));
+        label_3->setGeometry(QRect(20, 10, 181, 20));
         line = new QFrame(centralWidget);
         line->setObjectName(QStringLiteral("line"));
         line->setGeometry(QRect(20, 90, 341, 20));
@@ -104,130 +114,97 @@ public:
         QFont font1;
         font1.setPointSize(10);
         radioButton->setFont(font1);
+        radioButton->setCursor(QCursor(Qt::PointingHandCursor));
         radioButton_2 = new QRadioButton(centralWidget);
         radioButton_2->setObjectName(QStringLiteral("radioButton_2"));
         radioButton_2->setGeometry(QRect(160, 110, 82, 17));
         radioButton_2->setFont(font1);
-        label_8 = new QLabel(centralWidget);
-        label_8->setObjectName(QStringLiteral("label_8"));
-        label_8->setGeometry(QRect(20, 150, 71, 21));
+        radioButton_2->setCursor(QCursor(Qt::PointingHandCursor));
         label_4 = new QLabel(centralWidget);
         label_4->setObjectName(QStringLiteral("label_4"));
-        label_4->setGeometry(QRect(10, 380, 33, 16));
-        widget = new QWidget(centralWidget);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(9, 179, 360, 163));
-        gridLayout_3 = new QGridLayout(widget);
-        gridLayout_3->setSpacing(6);
-        gridLayout_3->setContentsMargins(11, 11, 11, 11);
-        gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
-        gridLayout_3->setContentsMargins(0, 0, 0, 0);
-        gridLayout = new QGridLayout();
-        gridLayout->setSpacing(6);
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        label_6 = new QLabel(widget);
-        label_6->setObjectName(QStringLiteral("label_6"));
-        label_6->setTextFormat(Qt::AutoText);
-
-        gridLayout->addWidget(label_6, 0, 0, 1, 1);
-
-        verticalLayout = new QVBoxLayout();
-        verticalLayout->setSpacing(6);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        lineEdit_2 = new QLineEdit(widget);
-        lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
-
-        verticalLayout->addWidget(lineEdit_2);
-
-        lineEdit_3 = new QLineEdit(widget);
-        lineEdit_3->setObjectName(QStringLiteral("lineEdit_3"));
-
-        verticalLayout->addWidget(lineEdit_3);
-
-
-        gridLayout->addLayout(verticalLayout, 0, 1, 2, 1);
-
-        label_7 = new QLabel(widget);
-        label_7->setObjectName(QStringLiteral("label_7"));
-
-        gridLayout->addWidget(label_7, 1, 0, 1, 1);
-
-
-        gridLayout_3->addLayout(gridLayout, 0, 0, 1, 1);
-
-        pushButton_2 = new QPushButton(widget);
+        label_4->setGeometry(QRect(20, 390, 33, 16));
+        tabWidget = new QTabWidget(centralWidget);
+        tabWidget->setObjectName(QStringLiteral("tabWidget"));
+        tabWidget->setGeometry(QRect(10, 160, 631, 201));
+        tabWidget->setAutoFillBackground(true);
+        tabWidget->setTabShape(QTabWidget::Rounded);
+        tabWidget->setIconSize(QSize(24, 24));
+        tabWidget->setMovable(true);
+        tab = new QWidget();
+        tab->setObjectName(QStringLiteral("tab"));
+        pushButton_2 = new QPushButton(tab);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+        pushButton_2->setGeometry(QRect(327, 70, 75, 51));
         pushButton_2->setFont(font);
-
-        gridLayout_3->addWidget(pushButton_2, 0, 1, 1, 2);
-
-        label_9 = new QLabel(widget);
-        label_9->setObjectName(QStringLiteral("label_9"));
-
-        gridLayout_3->addWidget(label_9, 1, 0, 1, 1);
-
-        gridLayout_2 = new QGridLayout();
-        gridLayout_2->setSpacing(6);
-        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-        label_10 = new QLabel(widget);
-        label_10->setObjectName(QStringLiteral("label_10"));
-        label_10->setTextFormat(Qt::AutoText);
-
-        gridLayout_2->addWidget(label_10, 0, 0, 1, 1);
-
-        verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setSpacing(6);
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
-        lineEdit_4 = new QLineEdit(widget);
-        lineEdit_4->setObjectName(QStringLiteral("lineEdit_4"));
-
-        verticalLayout_2->addWidget(lineEdit_4);
-
-        lineEdit_5 = new QLineEdit(widget);
-        lineEdit_5->setObjectName(QStringLiteral("lineEdit_5"));
-
-        verticalLayout_2->addWidget(lineEdit_5);
-
-
-        gridLayout_2->addLayout(verticalLayout_2, 0, 1, 2, 1);
-
-        label_11 = new QLabel(widget);
-        label_11->setObjectName(QStringLiteral("label_11"));
-
-        gridLayout_2->addWidget(label_11, 1, 0, 1, 1);
-
-
-        gridLayout_3->addLayout(gridLayout_2, 2, 0, 1, 2);
-
-        pushButton_3 = new QPushButton(widget);
+        pushButton_2->setCursor(QCursor(Qt::PointingHandCursor));
+        label_8 = new QLabel(tab);
+        label_8->setObjectName(QStringLiteral("label_8"));
+        label_8->setGeometry(QRect(60, 40, 71, 21));
+        label_12 = new QLabel(tab);
+        label_12->setObjectName(QStringLiteral("label_12"));
+        label_12->setGeometry(QRect(420, 150, 191, 16));
+        label_6 = new QLabel(tab);
+        label_6->setObjectName(QStringLiteral("label_6"));
+        label_6->setGeometry(QRect(51, 71, 128, 19));
+        label_6->setTextFormat(Qt::AutoText);
+        label_7 = new QLabel(tab);
+        label_7->setObjectName(QStringLiteral("label_7"));
+        label_7->setGeometry(QRect(51, 98, 87, 19));
+        lineEdit_2 = new QLineEdit(tab);
+        lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
+        lineEdit_2->setGeometry(QRect(186, 72, 133, 20));
+        lineEdit_3 = new QLineEdit(tab);
+        lineEdit_3->setObjectName(QStringLiteral("lineEdit_3"));
+        lineEdit_3->setGeometry(QRect(186, 98, 133, 20));
+        tabWidget->addTab(tab, QString());
+        tab_2 = new QWidget();
+        tab_2->setObjectName(QStringLiteral("tab_2"));
+        pushButton_3 = new QPushButton(tab_2);
         pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+        pushButton_3->setGeometry(QRect(320, 20, 91, 41));
         pushButton_3->setFont(font);
-
-        gridLayout_3->addWidget(pushButton_3, 2, 2, 1, 1);
-
+        pushButton_3->setCursor(QCursor(Qt::PointingHandCursor));
+        lineEdit_7 = new QLineEdit(tab_2);
+        lineEdit_7->setObjectName(QStringLiteral("lineEdit_7"));
+        lineEdit_7->setGeometry(QRect(430, 50, 133, 20));
+        label_14 = new QLabel(tab_2);
+        label_14->setObjectName(QStringLiteral("label_14"));
+        label_14->setGeometry(QRect(430, 20, 128, 21));
+        label_14->setTextFormat(Qt::AutoText);
+        label_9 = new QLabel(tab_2);
+        label_9->setObjectName(QStringLiteral("label_9"));
+        label_9->setGeometry(QRect(10, 21, 116, 16));
+        label_10 = new QLabel(tab_2);
+        label_10->setObjectName(QStringLiteral("label_10"));
+        label_10->setGeometry(QRect(10, 71, 111, 16));
+        label_11 = new QLabel(tab_2);
+        label_11->setObjectName(QStringLiteral("label_11"));
+        label_11->setGeometry(QRect(10, 125, 80, 16));
+        lineEdit_6 = new QLineEdit(tab_2);
+        lineEdit_6->setObjectName(QStringLiteral("lineEdit_6"));
+        lineEdit_6->setGeometry(QRect(130, 130, 133, 20));
+        lineEdit_5 = new QLineEdit(tab_2);
+        lineEdit_5->setObjectName(QStringLiteral("lineEdit_5"));
+        lineEdit_5->setGeometry(QRect(130, 70, 133, 20));
+        lineEdit_4 = new QLineEdit(tab_2);
+        lineEdit_4->setObjectName(QStringLiteral("lineEdit_4"));
+        lineEdit_4->setGeometry(QRect(132, 21, 133, 20));
+        tabWidget->addTab(tab_2, QString());
         ControllerWindow->setCentralWidget(centralWidget);
         pushButton->raise();
         label->raise();
         label_2->raise();
-        label_4->raise();
         label_5->raise();
         lineEdit->raise();
         label_3->raise();
         label_4->raise();
-        label_6->raise();
         line->raise();
-        lineEdit_2->raise();
-        label_7->raise();
-        lineEdit_3->raise();
-        pushButton_2->raise();
         radioButton->raise();
         radioButton_2->raise();
-        label_8->raise();
-        pushButton_3->raise();
-        label_9->raise();
+        tabWidget->raise();
         menuBar = new QMenuBar(ControllerWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 558, 21));
+        menuBar->setGeometry(QRect(0, 0, 700, 21));
         ControllerWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(ControllerWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -238,12 +215,15 @@ public:
 
         retranslateUi(ControllerWindow);
 
+        tabWidget->setCurrentIndex(0);
+
+
         QMetaObject::connectSlotsByName(ControllerWindow);
     } // setupUi
 
     void retranslateUi(QMainWindow *ControllerWindow)
     {
-        ControllerWindow->setWindowTitle(QApplication::translate("ControllerWindow", "Agilent Power Supply Controller v0.0.0", 0));
+        ControllerWindow->setWindowTitle(QApplication::translate("ControllerWindow", "Agilent Power Supply Controller v0.1.2 Beta", 0));
         pushButton->setText(QApplication::translate("ControllerWindow", "connect!", 0));
         label->setText(QString());
         label_2->setText(QApplication::translate("ControllerWindow", "Device ID: ", 0));
@@ -251,19 +231,21 @@ public:
         label_3->setText(QApplication::translate("ControllerWindow", "Connect to device through com port:", 0));
         radioButton->setText(QApplication::translate("ControllerWindow", "Output ON", 0));
         radioButton_2->setText(QApplication::translate("ControllerWindow", "Output Off", 0));
-        label_8->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Output 1</span></p></body></html>", 0));
         label_4->setText(QApplication::translate("ControllerWindow", "Errors:", 0));
-        label_6->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Current Limit (</span><span style=\" font-size:12pt; font-weight:600; text-decoration: underline;\">A</span><span style=\" font-size:12pt; text-decoration: underline;\">)</span><span style=\" font-size:12pt; text-decoration: underline;\">:</span></p></body></html>", 0));
-        label_7->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Voltage (</span><span style=\" font-size:12pt; font-weight:600; text-decoration: underline;\">V</span><span style=\" font-size:12pt; text-decoration: underline;\">):</span></p></body></html>", 0));
         pushButton_2->setText(QApplication::translate("ControllerWindow", "\n"
 "Set!\n"
 "", 0));
-        label_9->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Output 2</span></p></body></html>", 0));
-        label_10->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Current Limit (</span><span style=\" font-size:12pt; font-weight:600; text-decoration: underline;\">A</span><span style=\" font-size:12pt; text-decoration: underline;\">)</span><span style=\" font-size:12pt; text-decoration: underline;\">:</span></p></body></html>", 0));
-        label_11->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Voltage (</span><span style=\" font-size:12pt; font-weight:600; text-decoration: underline;\">V</span><span style=\" font-size:12pt; text-decoration: underline;\">):</span></p></body></html>", 0));
-        pushButton_3->setText(QApplication::translate("ControllerWindow", "\n"
-"Set!\n"
-"", 0));
+        label_8->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Output 1</span></p></body></html>", 0));
+        label_12->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:10pt; text-decoration: underline;\">Note</span><span style=\" font-size:10pt;\">: Maximum current is 1.4</span><span style=\" font-size:10pt; font-weight:600;\"> A</span></p></body></html>", 0));
+        label_6->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Current Limit (</span><span style=\" font-size:12pt; font-weight:600; text-decoration: underline;\">A</span><span style=\" font-size:12pt; text-decoration: underline;\">)</span><span style=\" font-size:12pt; text-decoration: underline;\">:</span></p></body></html>", 0));
+        label_7->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Voltage (</span><span style=\" font-size:12pt; font-weight:600; text-decoration: underline;\">V</span><span style=\" font-size:12pt; text-decoration: underline;\">):</span></p></body></html>", 0));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("ControllerWindow", "Manual Control", 0));
+        pushButton_3->setText(QApplication::translate("ControllerWindow", "Start", 0));
+        label_14->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:12pt; text-decoration: underline;\">Current Limit (</span><span style=\" font-size:12pt; font-weight:600; text-decoration: underline;\">A</span><span style=\" font-size:12pt; text-decoration: underline;\">)</span><span style=\" font-size:12pt; text-decoration: underline;\">:</span></p></body></html>", 0));
+        label_9->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">starting voltage (</span><span style=\" font-size:10pt; font-weight:600;\">V</span><span style=\" font-size:10pt;\">):</span></p></body></html>", 0));
+        label_10->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Ending voltage (</span><span style=\" font-size:10pt; font-weight:600;\">V</span><span style=\" font-size:10pt;\">):</span></p></body></html>", 0));
+        label_11->setText(QApplication::translate("ControllerWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Rise time (</span><span style=\" font-size:10pt; font-weight:600;\">S</span><span style=\" font-size:10pt;\">):</span></p></body></html>", 0));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("ControllerWindow", "Voltage Ramp", 0));
     } // retranslateUi
 
 };

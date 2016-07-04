@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ControllerWindow_t {
     QByteArrayData data[7];
-    char stringdata0[136];
+    char stringdata0[137];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,13 +35,13 @@ QT_MOC_LITERAL(2, 39, 0), // ""
 QT_MOC_LITERAL(3, 40, 23), // "on_pushButton_2_clicked"
 QT_MOC_LITERAL(4, 64, 22), // "on_radioButton_clicked"
 QT_MOC_LITERAL(5, 87, 24), // "on_radioButton_2_clicked"
-QT_MOC_LITERAL(6, 112, 23) // "on_pushButton_3_clicked"
+QT_MOC_LITERAL(6, 112, 24) // "on_pushButton_3_released"
 
     },
     "ControllerWindow\0on_pushButton_clicked\0"
     "\0on_pushButton_2_clicked\0"
     "on_radioButton_clicked\0on_radioButton_2_clicked\0"
-    "on_pushButton_3_clicked"
+    "on_pushButton_3_released"
 };
 #undef QT_MOC_LITERAL
 
@@ -85,7 +85,7 @@ void ControllerWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
         case 1: _t->on_pushButton_2_clicked(); break;
         case 2: _t->on_radioButton_clicked(); break;
         case 3: _t->on_radioButton_2_clicked(); break;
-        case 4: _t->on_pushButton_3_clicked(); break;
+        case 4: _t->on_pushButton_3_released(); break;
         default: ;
         }
     }

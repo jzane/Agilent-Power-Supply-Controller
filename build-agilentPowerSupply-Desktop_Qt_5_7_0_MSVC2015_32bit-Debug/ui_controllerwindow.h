@@ -125,7 +125,7 @@ public:
         label_4->setGeometry(QRect(20, 390, 33, 16));
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QStringLiteral("tabWidget"));
-        tabWidget->setGeometry(QRect(10, 150, 631, 201));
+        tabWidget->setGeometry(QRect(10, 160, 631, 201));
         tabWidget->setAutoFillBackground(true);
         tabWidget->setTabShape(QTabWidget::Rounded);
         tabWidget->setIconSize(QSize(24, 24));
